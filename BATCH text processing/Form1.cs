@@ -13,5 +13,9 @@ namespace BATCH_text_processing {
     public Form1() {
       InitializeComponent();
     }
+
+    private void ChoseDirectory_Click(object sender, EventArgs e) {
+
+    }
   }
 }
