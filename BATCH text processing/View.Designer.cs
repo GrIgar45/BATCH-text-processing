@@ -66,6 +66,7 @@
       this.splitContainer1.Size = new System.Drawing.Size(494, 217);
       this.splitContainer1.SplitterDistance = 241;
       this.splitContainer1.TabIndex = 0;
+      this.splitContainer1.TabStop = false;
       // 
       // groupBox1
       // 
@@ -147,6 +148,7 @@
       // 
       // replace
       // 
+      this.replace.Enabled = false;
       this.replace.Name = "replace";
       this.replace.Size = new System.Drawing.Size(123, 20);
       this.replace.Text = "Выполнить замену";

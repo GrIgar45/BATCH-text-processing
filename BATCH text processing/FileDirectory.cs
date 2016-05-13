@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using Ude;
 
 namespace BATCH_text_processing {
   class FileDirectory {
@@ -24,7 +22,7 @@ namespace BATCH_text_processing {
     public void ReplaceTextInFilles(string searchText, string replaceText) {
       _searchText = searchText;
       _replaceText = replaceText;
-      foreach (var fille in FilleList) {
+      foreach (var fille in _filleList) {
         Replace(fille);
       }
       if (_directories == null) return;
@@ -34,14 +32,23 @@ namespace BATCH_text_processing {
     }
     private void Replace(string filePath) {
       string content;
-      using (var reader = new StreamReader(filePath))
+      var en = DetectEncoding(filePath);
+      if (en == null) return; //Unknown encoding? nothing to do here!
+
+      using (var reader = new StreamReader(filePath, en))
         content = reader.ReadToEnd();
-      if (!Regex.IsMatch(content, _searchText)) return;
+
       content = Regex.Replace(content, _searchText, _replaceText);
-      using (var writer = new StreamWriter(filePath))
-        writer.Write(content);
+      File.WriteAllText(filePath, content);
     }
 
-    public List<string> FilleList => _filleList;
+    private Encoding DetectEncoding(string filePath) {
+      var cd = new CharsetDetector();
+      using (var fStream = File.OpenRead(filePath)) {
+        cd.Feed(fStream);
+        cd.DataEnd();
+      }
+      return cd.Charset == null ? null : Encoding.GetEncoding(cd.Charset);
+    }
   }
 }
