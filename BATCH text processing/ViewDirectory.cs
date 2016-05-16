@@ -9,12 +9,20 @@ namespace BATCH_text_processing {
     /// Нажатие кнопки выпора директории
     /// </summary>
     private void ChoseDirectory_Click(object sender, EventArgs e) {
-      var openDialog = new FolderBrowserDialog { ShowNewFolderButton = false };
-      if (openDialog.ShowDialog() != DialogResult.OK) return;
-      if (!CheckDirectiryExist(openDialog.SelectedPath)) return;
+      var openDialog = new FolderBrowserDialog {ShowNewFolderButton = false};
+      if (openDialog.ShowDialog() != DialogResult.OK || !CheckDirectiryExist(openDialog.SelectedPath)) return;
       _currentForder = openDialog.SelectedPath;
       statusLabel.Text = openDialog.SelectedPath;
       directoryPath.Text = openDialog.SelectedPath;
+      RemoveDirectiryPathError();
+      refresh.Enabled = true;
+      GetAllFilePath();
+    }
+    
+    /// <summary>
+    /// Обработка нажатия клавиши обновить
+    /// </summary>
+    private void Refresh_Click(object sender, EventArgs e) {
       RemoveDirectiryPathError();
       GetAllFilePath();
     }
@@ -29,6 +37,7 @@ namespace BATCH_text_processing {
         return;
       }
       RemoveDirectiryPathError();
+      refresh.Enabled = true;
       statusLabel.Text = directoryPath.Text;
       _currentForder = directoryPath.Text;
       GetAllFilePath();
@@ -63,10 +72,11 @@ namespace BATCH_text_processing {
     public void GetAllFilePath() {
       try {
         _pathList = new List<string>();
+        FileDirectory.FilesCount = 0;
         _fileDirectory = new FileDirectory(_currentForder, ref _pathList);
         FillListOfFile();
       }
-      catch (UnauthorizedAccessException e) {
+      catch (UnauthorizedAccessException) {
         SetDirectiryPathError("Ошибка доступа");
       }
     }
@@ -76,9 +86,10 @@ namespace BATCH_text_processing {
     /// </summary>
     private void FillListOfFile() {
       checkView.Clear();
-      foreach (var path in _pathList) {
+      checkView.BeginUpdate();
+      foreach (var path in _pathList) 
         checkView.Items.Add(path);
-      }
+      checkView.EndUpdate();
     }
   }
 }

@@ -40,6 +40,7 @@
       this.groupBox2 = new System.Windows.Forms.GroupBox();
       this.replaceBox = new System.Windows.Forms.TextBox();
       this.panel2 = new System.Windows.Forms.Panel();
+      this.refresh = new System.Windows.Forms.Button();
       this.replace = new System.Windows.Forms.Button();
       this.search = new System.Windows.Forms.Button();
       this.directoryPath = new System.Windows.Forms.TextBox();
@@ -109,8 +110,9 @@
       // about
       // 
       this.about.Name = "about";
-      this.about.Size = new System.Drawing.Size(142, 22);
+      this.about.Size = new System.Drawing.Size(152, 22);
       this.about.Text = "О рограмме";
+      this.about.Click += new System.EventHandler(this.about_Click);
       // 
       // statusStrip1
       // 
@@ -215,6 +217,7 @@
       // 
       // panel2
       // 
+      this.panel2.Controls.Add(this.refresh);
       this.panel2.Controls.Add(this.replace);
       this.panel2.Controls.Add(this.search);
       this.panel2.Controls.Add(this.directoryPath);
@@ -225,6 +228,18 @@
       this.panel2.Name = "panel2";
       this.panel2.Size = new System.Drawing.Size(163, 390);
       this.panel2.TabIndex = 5;
+      // 
+      // refresh
+      // 
+      this.refresh.Enabled = false;
+      this.refresh.Location = new System.Drawing.Point(87, 48);
+      this.refresh.Name = "refresh";
+      this.refresh.Size = new System.Drawing.Size(70, 23);
+      this.refresh.TabIndex = 7;
+      this.refresh.TabStop = false;
+      this.refresh.Text = "Обновить";
+      this.refresh.UseVisualStyleBackColor = true;
+      this.refresh.Click += new System.EventHandler(this.Refresh_Click);
       // 
       // replace
       // 
@@ -243,7 +258,7 @@
       this.search.Enabled = false;
       this.search.Location = new System.Drawing.Point(6, 48);
       this.search.Name = "search";
-      this.search.Size = new System.Drawing.Size(151, 23);
+      this.search.Size = new System.Drawing.Size(70, 23);
       this.search.TabIndex = 5;
       this.search.TabStop = false;
       this.search.Text = "Поиск";
@@ -264,10 +279,10 @@
       this.linkLabel1.AutoSize = true;
       this.linkLabel1.Location = new System.Drawing.Point(12, 6);
       this.linkLabel1.Name = "linkLabel1";
-      this.linkLabel1.Size = new System.Drawing.Size(69, 13);
+      this.linkLabel1.Size = new System.Drawing.Size(48, 13);
       this.linkLabel1.TabIndex = 1;
       this.linkLabel1.TabStop = true;
-      this.linkLabel1.Text = "Директория";
+      this.linkLabel1.Text = "Каталог";
       // 
       // button1
       // 
@@ -300,6 +315,7 @@
       // 
       // errorProvider1
       // 
+      this.errorProvider1.BlinkStyle = System.Windows.Forms.ErrorBlinkStyle.AlwaysBlink;
       this.errorProvider1.ContainerControl = this;
       // 
       // View
@@ -364,6 +380,7 @@
     private System.Windows.Forms.Button button1;
     private System.Windows.Forms.SplitContainer splitContainer2;
     private System.Windows.Forms.ErrorProvider errorProvider1;
+    private System.Windows.Forms.Button refresh;
   }
 }
 
