@@ -57,6 +57,7 @@ namespace BATCH_text_processing {
     private static bool Search(string filePath, string searchText) {
       Encoding en;
       var content = GetContent(filePath, out en);
+      var ret = content != null && Regex.IsMatch(content, searchText);
       return content != null && Regex.IsMatch(content, searchText);
         // no content or not contain text? nothing to do here!
     }

@@ -12,7 +12,7 @@ namespace BATCH_text_processing {
     public View() {
       InitializeComponent();
     }
-
+    
     /// <summary>
     /// Обработка нажатия клавиши поиска
     /// </summary>
@@ -20,6 +20,7 @@ namespace BATCH_text_processing {
       _pathList = new List<string>();
       try {
         _fileDirectory.SearchTextInFiles(searchBox.Text, ref _pathList);
+        GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
       }
       catch (FileNotFoundException) {
         MessageBox.Show(@"Структура каталога была изменeна");
@@ -36,6 +37,7 @@ namespace BATCH_text_processing {
     private void replace_Click(object sender, EventArgs e) {
       try {
         _fileDirectory.ReplaceTextInFiles(searchBox.Text, replaceBox.Text, checkView.CheckedItems);
+        GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
       }
       catch (FileNotFoundException) {
         MessageBox.Show(@"Структура каталога была изменeна");

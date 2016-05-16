@@ -24,6 +24,7 @@
     /// </summary>
     private void InitializeComponent() {
       this.components = new System.ComponentModel.Container();
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(View));
       this.menuStrip1 = new System.Windows.Forms.MenuStrip();
       this.fileTools = new System.Windows.Forms.ToolStripMenuItem();
       this.ChoseDirectory = new System.Windows.Forms.ToolStripMenuItem();
@@ -110,7 +111,7 @@
       // about
       // 
       this.about.Name = "about";
-      this.about.Size = new System.Drawing.Size(152, 22);
+      this.about.Size = new System.Drawing.Size(142, 22);
       this.about.Text = "О рограмме";
       this.about.Click += new System.EventHandler(this.about_Click);
       // 
@@ -327,6 +328,7 @@
       this.Controls.Add(this.splitContainer2);
       this.Controls.Add(this.statusStrip1);
       this.Controls.Add(this.menuStrip1);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.MainMenuStrip = this.menuStrip1;
       this.MinimumSize = new System.Drawing.Size(750, 400);
       this.Name = "View";
