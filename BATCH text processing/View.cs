@@ -1,33 +1,32 @@
 ﻿using System;
-using System.IO;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace BATCH_text_processing {
   public partial class View : Form {
-    private static string _currentForder;
-    private static FileDirectory _fileDirectory;
+    private List<string> _pathList;
+    private string _currentForder;
+    private FileDirectory _fileDirectory;
+
     public View() {
       InitializeComponent();
     }
 
-    private void ChoseDirectory_Click(object sender, EventArgs e) {
-      var openDialog = new FolderBrowserDialog {ShowNewFolderButton = false};
-      if (openDialog.ShowDialog() != DialogResult.OK) return;
-      _currentForder = openDialog.SelectedPath;
-      statusLabel.Text = openDialog.SelectedPath;
-      replace.Enabled = true;
+    private void search_Click(object sender, EventArgs e) {
+      _pathList = new List<string>();
+      _fileDirectory.SearchTextInFiles(searchBox.Text, ref _pathList);
+      FillListOfFile();
     }
 
     private void replace_Click(object sender, EventArgs e) {
-      if (!Directory.Exists(_currentForder)) {
-        MessageBox.Show(@"Выбраной папки не существует");
-        return;
+      _fileDirectory.ReplaceTextInFiles(searchBox.Text, replaceBox.Text, checkView.CheckedItems);
+      foreach (ListViewItem item in checkView.CheckedItems) {
+        
       }
-      StartProcessing(_currentForder, searchBox.Text, replaceBox.Text);
     }
-    public static void StartProcessing(string mainDirectory, string searchText, string replaceText) {
-      _fileDirectory = new FileDirectory(mainDirectory);
-      _fileDirectory.ReplaceTextInFilles(searchText, replaceText);
+
+    private void quit_Click(object sender, EventArgs e) {
+      Close();
     }
   }
 }
