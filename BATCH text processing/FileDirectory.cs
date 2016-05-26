@@ -27,12 +27,13 @@ namespace BATCH_text_processing {
     /// </summary>
     /// <param name="folder">Адресс пути к директории</param>
     /// <param name="pathList">Список всех файлов</param>
-    public FileDirectory(string folder, ref List<string> pathList) {
-      _fileList.AddRange(Directory.GetFiles(folder));
+    /// <param name="searchPattern"></param>
+    public FileDirectory(string folder, ref List<string> pathList, string searchPattern) {
+      _fileList.AddRange(Directory.GetFiles(folder, searchPattern));
       FilesCount += _fileList.Count;
       var directories = Directory.GetDirectories(folder);
       foreach (var directory in directories)
-        _directories.Add(new FileDirectory(directory, ref pathList));
+        _directories.Add(new FileDirectory(directory, ref pathList, searchPattern));
       pathList.AddRange(_fileList); // fill the list for view in listBox
     }
 
@@ -41,11 +42,12 @@ namespace BATCH_text_processing {
     /// </summary>
     /// <param name="searchText">Поисковой запрос</param>
     /// <param name="pathList">Список подходящих файлов</param>
-    public void SearchTextInFiles(string searchText, ref List<string> pathList) {
+    /// <param name="logWriter"></param>
+    public void SearchTextInFiles(string searchText, ref List<string> pathList, LogWriter logWriter) {
       foreach (var fileDirectory in _directories) {
-        fileDirectory.SearchTextInFiles(searchText, ref pathList);
+        fileDirectory.SearchTextInFiles(searchText, ref pathList, logWriter);
       }
-      pathList.AddRange(_fileList.Where(filePath => Search(filePath, searchText)));
+      pathList.AddRange(_fileList.Where(filePath => Search(filePath, searchText, logWriter)));
     }
 
     /// <summary>
@@ -53,13 +55,19 @@ namespace BATCH_text_processing {
     /// </summary>
     /// <param name="filePath">Путь к файлу</param>
     /// <param name="searchText">Поисковой запрос</param>
+    /// <param name="logWriter"></param>
     /// <returns></returns>
-    private static bool Search(string filePath, string searchText) {
+    private static bool Search(string filePath, string searchText, LogWriter logWriter) {
       Encoding en;
       var content = GetContent(filePath, out en);
-      var ret = content != null && Regex.IsMatch(content, searchText);
-      return content != null && Regex.IsMatch(content, searchText);
-        // no content or not contain text? nothing to do here!
+      // not contain text? nothing to do here!
+      if (en == null) {
+        logWriter.AddLog(filePath, $"не подходящий формат");
+        return false;
+      }
+      var result = Regex.IsMatch(content, searchText);
+      logWriter.AddLog(filePath, result ? "найдено" : "не найдено");
+      return result;
     }
 
     /// <summary>
@@ -68,14 +76,13 @@ namespace BATCH_text_processing {
     /// <param name="searchText">Поисковой запрос</param>
     /// <param name="replaceText">Заменяемый текст</param>
     /// <param name="listCollection">Колекция отмеченых пользователем файлов для обработки</param>
-    public void ReplaceTextInFiles(string searchText, string replaceText,
-      ListView.CheckedListViewItemCollection listCollection) {
-      foreach (var directory in _directories) {
-        directory.ReplaceTextInFiles(searchText, replaceText, listCollection);
-      }
-      foreach (var file in _fileList) {
-        Replace(file, searchText, replaceText, listCollection);
-      }
+    /// <param name="logWriter"></param>
+    public int ReplaceTextInFiles(string searchText, string replaceText,
+      ListView.CheckedListViewItemCollection listCollection, LogWriter logWriter) {
+      var i =
+        _directories.Sum(directory => directory.ReplaceTextInFiles(searchText, replaceText, listCollection, logWriter)) +
+        _fileList.Sum(file => Replace(file, searchText, replaceText, listCollection, logWriter));
+      return i;
     }
 
     /// <summary>
@@ -85,15 +92,20 @@ namespace BATCH_text_processing {
     /// <param name="searchText">Поисковой запрос</param>
     /// <param name="replaceText">Заменяемый текст</param>
     /// <param name="listCollection">Колекция отмеченых пользователем файлов для обработки</param>
-    private static void Replace(string filePath, string searchText, string replaceText,
-      IEnumerable listCollection) {
+    /// <param name="logWriter"></param>
+    private static int Replace(string filePath, string searchText, string replaceText, IEnumerable listCollection, LogWriter logWriter) {
       Encoding en;
       var content = GetContent(filePath, out en);
-      if (content == null || listCollection.Cast<ListViewItem>().All(item => item.Text != filePath))
-        return; // Unknown encoding or not selected path? nothing to do here!
-
+      if (content == null || listCollection.Cast<ListViewItem>().All(item => item.Text != filePath)) {
+        logWriter.AddLog(filePath, "Неверный формат");
+        return 0; // Unknown encoding or not selected path? nothing to do here!
+      }
+      var contain = Regex.IsMatch(content, searchText);
+      logWriter.AddLog(filePath, contain? $"Заменено \"{searchText}\" на \"{replaceText}\"": "Не найдено соотвествий");
+      if (!contain) return 0;
       content = Regex.Replace(content, searchText, replaceText);
       File.WriteAllText(filePath, content, en);
+      return 1;
     }
 
     /// <summary>
@@ -103,13 +115,8 @@ namespace BATCH_text_processing {
     /// <param name="en">Кодировка файла</param>
     /// <returns>Текст файла</returns>
     private static string GetContent(string filePath, out Encoding en) {
-      string content;
       en = DetectEncoding(filePath);
-      if (en == null) return null;
-      // Read all -f-*-c-k-*-g- text from file 
-      using (var reader = new StreamReader(filePath, en))
-        content = reader.ReadToEnd();
-      return content;
+      return en == null ? null : File.ReadAllText(filePath, en);
     }
 
     /// <summary>

@@ -10,7 +10,7 @@ namespace BATCH_text_processing {
     static void Main() {
       Application.EnableVisualStyles();
       Application.SetCompatibleTextRenderingDefault(false);
-      Application.Run(new View());
+      Application.Run(new MainForm());
     }
   }
 }

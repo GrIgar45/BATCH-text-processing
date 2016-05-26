@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BATCH_text_processing.AboutBox1">
+    <Position X="5.5" Y="0.5" Width="1.5" />
+    <Members>
+      <Property Name="AssemblyCompany" Hidden="true" />
+      <Property Name="AssemblyCopyright" Hidden="true" />
+      <Property Name="AssemblyDescription" Hidden="true" />
+      <Property Name="AssemblyProduct" Hidden="true" />
+      <Property Name="AssemblyTitle" Hidden="true" />
+      <Property Name="AssemblyVersion" Hidden="true" />
+      <Method Name="Dispose" Hidden="true" />
+      <Method Name="InitializeComponent" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>kIAAAAgAACAgCAUAAACAAAADAAAAEIAAAAAAAAAAAAA=</HashCode>
+      <FileName>AboutBox1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BATCH_text_processing.FileDirectory">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <AssociationLine Name="_directories" Type="BATCH_text_processing.FileDirectory" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.312" Y="3.853" />
+        <Point X="3.312" Y="4.436" />
+        <Point X="4.312" Y="4.436" />
+        <Point X="4.312" Y="3.853" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.016" Y="0.71" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAAAAUBAAAAACAAAAAAgAAAAGAAAAAgACA=</HashCode>
+      <FileName>FileDirectory.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="_directories" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="BATCH_text_processing.LogWriter">
+    <Position X="8" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>LogWriter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BATCH_text_processing.Program">
+    <Position X="8" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BATCH_text_processing.MainForm">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Members>
+      <Field Name="components" Hidden="true" />
+      <Field Name="controlPanel" Hidden="true" />
+      <Method Name="Dispose" Hidden="true" />
+      <Field Name="findTextBox" Hidden="true" />
+      <Method Name="InitializeComponent" Hidden="true" />
+      <Field Name="menuStrip" Hidden="true" />
+      <Field Name="paternLabel" Hidden="true" />
+      <Field Name="regexPanel" Hidden="true" />
+      <Field Name="replaseTextBox" Hidden="true" />
+      <Field Name="searchBox" Hidden="true" />
+      <Field Name="searchPatternBox" Hidden="true" />
+      <Field Name="statusLabel" Hidden="true" />
+    </Members>
+    <AssociationLine Name="_fileDirectory" Type="BATCH_text_processing.FileDirectory">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-0.019" Y="0.06" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>LaAAIEgAgCAAkCiAAYCSAAICAEEgAJAJJiAbBAAIIAE=</HashCode>
+      <FileName>MainForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_fileDirectory" />
+    </ShowAsAssociation>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

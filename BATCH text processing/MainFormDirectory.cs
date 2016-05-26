@@ -4,7 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 
 namespace BATCH_text_processing {
-  public partial class View {
+  public partial class MainForm {
     /// <summary>
     /// Нажатие кнопки выпора директории
     /// </summary>
@@ -14,17 +14,20 @@ namespace BATCH_text_processing {
       _currentForder = openDialog.SelectedPath;
       statusLabel.Text = openDialog.SelectedPath;
       directoryPath.Text = openDialog.SelectedPath;
+      Cursor = Cursors.WaitCursor;
       RemoveDirectiryPathError();
-      refresh.Enabled = true;
       GetAllFilePath();
+      Cursor = Cursors.Arrow;
     }
     
     /// <summary>
     /// Обработка нажатия клавиши обновить
     /// </summary>
     private void Refresh_Click(object sender, EventArgs e) {
+      Cursor = Cursors.WaitCursor;
       RemoveDirectiryPathError();
       GetAllFilePath();
+      Cursor = Cursors.Arrow;
     }
 
     /// <summary>
@@ -37,10 +40,11 @@ namespace BATCH_text_processing {
         return;
       }
       RemoveDirectiryPathError();
-      refresh.Enabled = true;
       statusLabel.Text = directoryPath.Text;
       _currentForder = directoryPath.Text;
+      Cursor = Cursors.WaitCursor;
       GetAllFilePath();
+      Cursor = Cursors.Arrow;
     }
 
     /// <summary>
@@ -58,12 +62,14 @@ namespace BATCH_text_processing {
     private void SetDirectiryPathError(string error) {
       replace.Enabled = false;
       search.Enabled = false;
-      errorProvider1.SetError(this.directoryPath, error);
+      refresh.Enabled = false;
+      errorProvider.SetError(this.directoryPath, error);
     }
     private void RemoveDirectiryPathError() {
       replace.Enabled = true;
       search.Enabled = true;
-      errorProvider1.SetError(this.directoryPath, string.Empty);
+      refresh.Enabled = true;
+      errorProvider.SetError(this.directoryPath, string.Empty);
     }
 
     /// <summary>
@@ -73,7 +79,7 @@ namespace BATCH_text_processing {
       try {
         _pathList = new List<string>();
         FileDirectory.FilesCount = 0;
-        _fileDirectory = new FileDirectory(_currentForder, ref _pathList);
+        _fileDirectory = new FileDirectory(_currentForder, ref _pathList, searchPatternBox.Text);
         FillListOfFile();
       }
       catch (UnauthorizedAccessException) {
@@ -86,10 +92,10 @@ namespace BATCH_text_processing {
     /// </summary>
     private void FillListOfFile() {
       checkView.Clear();
-      checkView.BeginUpdate();
-      foreach (var path in _pathList) 
-        checkView.Items.Add(path);
-      checkView.EndUpdate();
+      for (var index = 0; index < _pathList.Count; index++) {
+        checkView.Items.Add(_pathList[index]);
+        checkView.Items[index].Checked = true;
+      }
     }
   }
 }
