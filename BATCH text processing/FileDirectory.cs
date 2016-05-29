@@ -16,11 +16,7 @@ namespace BATCH_text_processing {
     };
     private readonly List<FileDirectory> _directories = new List<FileDirectory>();
     private readonly List<string> _fileList = new List<string>();
-
-    /// <summary>
-    /// Число файлов в каталоге
-    /// </summary>
-    public static int FilesCount { get; set; } = 0;
+    
 
     /// <summary>
     /// Инициализирует объект каталога
@@ -30,20 +26,28 @@ namespace BATCH_text_processing {
     /// <param name="searchPattern"></param>
     public FileDirectory(string folder, ref List<string> pathList, string searchPattern) {
       _fileList.AddRange(Directory.GetFiles(folder, searchPattern));
-      FilesCount += _fileList.Count;
       var directories = Directory.GetDirectories(folder);
       foreach (var directory in directories)
         _directories.Add(new FileDirectory(directory, ref pathList, searchPattern));
       pathList.AddRange(_fileList); // fill the list for view in listBox
     }
 
-    /// <summary>
-    /// Поиск по каталогу
-    /// </summary>
-    /// <param name="searchText">Поисковой запрос</param>
-    /// <param name="pathList">Список подходящих файлов</param>
-    /// <param name="logWriter"></param>
-    public void SearchTextInFiles(string searchText, ref List<string> pathList, LogWriter logWriter) {
+        private LogWriter LogWriter {
+            get {
+                throw new System.NotImplementedException();
+            }
+
+            set {
+            }
+        }
+
+        /// <summary>
+        /// Поиск по каталогу
+        /// </summary>
+        /// <param name="searchText">Поисковой запрос</param>
+        /// <param name="pathList">Список подходящих файлов</param>
+        /// <param name="logWriter"></param>
+        public void SearchTextInFiles(string searchText, ref List<string> pathList, LogWriter logWriter) {
       foreach (var fileDirectory in _directories) {
         fileDirectory.SearchTextInFiles(searchText, ref pathList, logWriter);
       }

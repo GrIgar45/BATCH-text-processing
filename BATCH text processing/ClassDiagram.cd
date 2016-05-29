@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="BATCH_text_processing.AboutBox1">
-    <Position X="5.5" Y="0.5" Width="1.5" />
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="BATCH_text_processing.AboutForm">
+    <Position X="0.5" Y="2.75" Width="1.5" />
     <Members>
       <Property Name="AssemblyCompany" Hidden="true" />
       <Property Name="AssemblyCopyright" Hidden="true" />
@@ -14,46 +14,43 @@
     </Members>
     <TypeIdentifier>
       <HashCode>kIAAAAgAACAgCAUAAACAAAADAAAAEIAAAAAAAAAAAAA=</HashCode>
-      <FileName>AboutBox1.cs</FileName>
+      <FileName>AboutForm.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BATCH_text_processing.FileDirectory">
-    <Position X="3" Y="0.5" Width="1.5" />
-    <AssociationLine Name="_directories" Type="BATCH_text_processing.FileDirectory" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
-      <Path>
-        <Point X="3.312" Y="3.853" />
-        <Point X="3.312" Y="4.436" />
-        <Point X="4.312" Y="4.436" />
-        <Point X="4.312" Y="3.853" />
-      </Path>
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <AssociationLine Name="LogWriter" Type="BATCH_text_processing.LogWriter">
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.016" Y="0.71" />
+        <Position X="0.398" Y="0.06" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>AAAABAAAAAAAAAUBAAAAACAAAAAAgAAAAGAAAAAgACA=</HashCode>
+      <HashCode>AAAABCAAAAAAAAUBAAAAACAAAAAAAAAAAGAAAAAgACA=</HashCode>
       <FileName>FileDirectory.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="LogWriter" />
+    </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Field Name="_directories" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="BATCH_text_processing.LogWriter">
-    <Position X="8" Y="0.5" Width="1.5" />
+    <Position X="9.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAACAAAAAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAEAEAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
       <FileName>LogWriter.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BATCH_text_processing.Program">
-    <Position X="8" Y="2.75" Width="1.5" />
+    <Position X="6.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BATCH_text_processing.MainForm">
-    <Position X="0.5" Y="0.5" Width="1.5" />
+    <Position X="3.5" Y="0.5" Width="1.5" />
     <Members>
       <Field Name="components" Hidden="true" />
       <Field Name="controlPanel" Hidden="true" />
@@ -68,17 +65,18 @@
       <Field Name="searchPatternBox" Hidden="true" />
       <Field Name="statusLabel" Hidden="true" />
     </Members>
-    <AssociationLine Name="_fileDirectory" Type="BATCH_text_processing.FileDirectory">
+    <AssociationLine Name="AboutForm" Type="BATCH_text_processing.AboutForm">
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="-0.019" Y="0.06" />
+        <Position X="0.312" Y="0.06" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>LaAAIEgAgCAAkCiAAYCSAAICAEEgAJAJJiAbBAAIIAE=</HashCode>
+      <HashCode>BaABAAgAgCFAEZiAAYSSAAICAEEAgJAJJAAaBCIIICE=</HashCode>
       <FileName>MainForm.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Field Name="_fileDirectory" />
+      <Property Name="AboutForm" />
     </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />

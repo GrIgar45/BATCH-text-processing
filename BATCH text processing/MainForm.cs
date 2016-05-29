@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Diagnostics;
 using System.IO;
-using System.Text.RegularExpressions;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace BATCH_text_processing {
@@ -16,25 +13,37 @@ namespace BATCH_text_processing {
     public MainForm() {
       InitializeComponent();
     }
-    
-    /// <summary>
-    /// Обработка нажатия клавиши поиска
-    /// </summary>
-    private void search_Click(object sender, EventArgs e) {
+
+        private AboutForm AboutForm {
+            get {
+                throw new System.NotImplementedException();
+            }
+
+            set {
+            }
+        }
+
+        /// <summary>
+        /// Обработка нажатия клавиши поиска
+        /// </summary>
+        private void Search_Click(object sender, EventArgs e) {
       _pathList = new List<string>();
       try {
         Cursor = Cursors.WaitCursor;
         var lw = new LogWriter(_currentForder, $"Поиск по ключевому слову:\n\"{searchBox.Text}\"");
         _fileDirectory.SearchTextInFiles(searchBox.Text, ref _pathList, lw);
         MessageBox.Show($"Кол-во найденых по запросу файлов:\n{_pathList.Count}", @"Поиск завершен");
-        lw.LogWrite();
+        lw.WriteLog();
       }
       catch (FileNotFoundException) {
-        MessageBox.Show(@"Структура каталога была изменeна");
+        MessageBox.Show(@"Структура каталога была изменeна", @"Ошибка");
         SetDirectiryPathError(string.Empty);
-        refresh.Enabled = true;
+        refreshButton.Enabled = true;
         checkView.Clear();
         return;
+      }
+      catch (ArgumentException) {
+        MessageBox.Show(@"Произошла ошибка синтаксического анализа регулярного выражения.", @"Ошибка");
       }
       finally {
         Cursor = Cursors.Arrow;
@@ -46,20 +55,23 @@ namespace BATCH_text_processing {
     /// <summary>
     /// Обработка нажатия клавиши замены
     /// </summary>
-    private void replace_Click(object sender, EventArgs e) {
+    private void Replace_Click(object sender, EventArgs e) {
       try {
         this.Cursor = Cursors.WaitCursor;
         var lw = new LogWriter(_currentForder, $"Замена по ключевому слову:\n\"{searchBox.Text}\"");
         var i = _fileDirectory.ReplaceTextInFiles(searchBox.Text, replaceBox.Text, checkView.CheckedItems, lw);
-        lw.LogWrite();
+        lw.WriteLog();
         MessageBox.Show($"Кол-во замен :\n{i}", @"Замена завершена");
         GC.Collect(GC.MaxGeneration, GCCollectionMode.Forced);
       }
       catch (FileNotFoundException) {
         MessageBox.Show(@"Структура каталога была изменeна");
         SetDirectiryPathError(string.Empty);
-        refresh.Enabled = true;
+        refreshButton.Enabled = true;
         checkView.Clear();
+      }
+      catch (ArgumentException) {
+        MessageBox.Show(@"Произошла ошибка синтаксического анализа регулярного выражения.", @"Ошибка");
       }
       finally {
         Cursor = Cursors.Arrow;
@@ -70,27 +82,29 @@ namespace BATCH_text_processing {
     /// <summary>
     /// Выход
     /// </summary>
-    private void quit_Click(object sender, EventArgs e) {
+    private void Quit_Click(object sender, EventArgs e) {
       Close();
     }
 
     /// <summary>
     /// Вызов формы о программе
     /// </summary>
-    private void about_Click(object sender, EventArgs e) {
-      var ab = new AboutBox1();
+    private void About_Click(object sender, EventArgs e) {
+      var ab = new AboutForm();
       ab.ShowDialog();
     }
 
     /// <summary>
     /// Открытие папки в проводнике
     /// </summary>
-    private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+    private void DirectoryLinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
       if (Directory.Exists(_currentForder))
         Process.Start("explorer.exe", _currentForder);
     }
-
-    private void searchPatternBox_Leave(object sender, EventArgs e) {
+    /// <summary>
+    /// Проверка на отсуствие запрещеной комбинации символов
+    /// </summary>
+    private void SearchBox_Leave(object sender, EventArgs e) {
       if (searchPatternBox.Text.Contains("..")) {
         searchPatternBox.Text = @"*.*";
       }

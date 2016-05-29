@@ -60,15 +60,15 @@ namespace BATCH_text_processing {
     }
 
     private void SetDirectiryPathError(string error) {
-      replace.Enabled = false;
-      search.Enabled = false;
-      refresh.Enabled = false;
+      replaceButton.Enabled = false;
+      searchButton.Enabled = false;
+      refreshButton.Enabled = false;
       errorProvider.SetError(this.directoryPath, error);
     }
     private void RemoveDirectiryPathError() {
-      replace.Enabled = true;
-      search.Enabled = true;
-      refresh.Enabled = true;
+      replaceButton.Enabled = true;
+      searchButton.Enabled = true;
+      refreshButton.Enabled = true;
       errorProvider.SetError(this.directoryPath, string.Empty);
     }
 
@@ -78,7 +78,6 @@ namespace BATCH_text_processing {
     public void GetAllFilePath() {
       try {
         _pathList = new List<string>();
-        FileDirectory.FilesCount = 0;
         _fileDirectory = new FileDirectory(_currentForder, ref _pathList, searchPatternBox.Text);
         FillListOfFile();
       }

@@ -3,6 +3,9 @@ using System.IO;
 using System.Text;
 
 namespace BATCH_text_processing {
+  /// <summary>
+  /// Запись резултата выполнения в журнал
+  /// </summary>
   internal class LogWriter {
     private readonly StringBuilder _stringBuilder;
 
@@ -21,7 +24,7 @@ namespace BATCH_text_processing {
     /// <summary>
     /// Записывает логи в буфере
     /// </summary>
-    public void LogWrite() {
+    public void WriteLog() {
       File.WriteAllText($"log{DateTime.Now:yyyy-MM-dd_hh-mm-ss}.txt", _stringBuilder.ToString());
     }
   }

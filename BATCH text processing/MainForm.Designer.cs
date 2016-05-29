@@ -28,8 +28,8 @@
       this.menuStrip = new System.Windows.Forms.MenuStrip();
       this.fileTools = new System.Windows.Forms.ToolStripMenuItem();
       this.choseDirectory = new System.Windows.Forms.ToolStripMenuItem();
-      this.quit = new System.Windows.Forms.ToolStripMenuItem();
-      this.reference = new System.Windows.Forms.ToolStripMenuItem();
+      this.quitButton = new System.Windows.Forms.ToolStripMenuItem();
+      this.referenceMenu = new System.Windows.Forms.ToolStripMenuItem();
       this.aboutButton = new System.Windows.Forms.ToolStripMenuItem();
       this.statusStrip = new System.Windows.Forms.StatusStrip();
       this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -43,9 +43,9 @@
       this.controlPanel = new System.Windows.Forms.Panel();
       this.paternLabel = new System.Windows.Forms.Label();
       this.searchPatternBox = new System.Windows.Forms.TextBox();
-      this.refresh = new System.Windows.Forms.Button();
-      this.replace = new System.Windows.Forms.Button();
-      this.search = new System.Windows.Forms.Button();
+      this.refreshButton = new System.Windows.Forms.Button();
+      this.replaceButton = new System.Windows.Forms.Button();
+      this.searchButton = new System.Windows.Forms.Button();
       this.directoryPath = new System.Windows.Forms.TextBox();
       this.folderLink = new System.Windows.Forms.LinkLabel();
       this.openDirectoryButton = new System.Windows.Forms.Button();
@@ -72,7 +72,7 @@
       // 
       this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileTools,
-            this.reference});
+            this.referenceMenu});
       this.menuStrip.Location = new System.Drawing.Point(0, 0);
       this.menuStrip.Name = "menuStrip";
       this.menuStrip.Size = new System.Drawing.Size(734, 24);
@@ -83,7 +83,7 @@
       // 
       this.fileTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.choseDirectory,
-            this.quit});
+            this.quitButton});
       this.fileTools.Name = "fileTools";
       this.fileTools.Size = new System.Drawing.Size(48, 20);
       this.fileTools.Text = "Файл";
@@ -95,27 +95,27 @@
       this.choseDirectory.Text = "Выбрать директорию";
       this.choseDirectory.Click += new System.EventHandler(this.ChoseDirectory_Click);
       // 
-      // quit
+      // quitButton
       // 
-      this.quit.Name = "quit";
-      this.quit.Size = new System.Drawing.Size(192, 22);
-      this.quit.Text = "Выход";
-      this.quit.Click += new System.EventHandler(this.quit_Click);
+      this.quitButton.Name = "quitButton";
+      this.quitButton.Size = new System.Drawing.Size(192, 22);
+      this.quitButton.Text = "Выход";
+      this.quitButton.Click += new System.EventHandler(this.Quit_Click);
       // 
-      // reference
+      // referenceMenu
       // 
-      this.reference.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+      this.referenceMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutButton});
-      this.reference.Name = "reference";
-      this.reference.Size = new System.Drawing.Size(65, 20);
-      this.reference.Text = "Справка";
+      this.referenceMenu.Name = "referenceMenu";
+      this.referenceMenu.Size = new System.Drawing.Size(65, 20);
+      this.referenceMenu.Text = "Справка";
       // 
       // aboutButton
       // 
       this.aboutButton.Name = "aboutButton";
       this.aboutButton.Size = new System.Drawing.Size(152, 22);
       this.aboutButton.Text = "О рограмме";
-      this.aboutButton.Click += new System.EventHandler(this.about_Click);
+      this.aboutButton.Click += new System.EventHandler(this.About_Click);
       // 
       // statusStrip
       // 
@@ -222,9 +222,9 @@
       // 
       this.controlPanel.Controls.Add(this.paternLabel);
       this.controlPanel.Controls.Add(this.searchPatternBox);
-      this.controlPanel.Controls.Add(this.refresh);
-      this.controlPanel.Controls.Add(this.replace);
-      this.controlPanel.Controls.Add(this.search);
+      this.controlPanel.Controls.Add(this.refreshButton);
+      this.controlPanel.Controls.Add(this.replaceButton);
+      this.controlPanel.Controls.Add(this.searchButton);
       this.controlPanel.Controls.Add(this.directoryPath);
       this.controlPanel.Controls.Add(this.folderLink);
       this.controlPanel.Controls.Add(this.openDirectoryButton);
@@ -251,43 +251,43 @@
       this.searchPatternBox.TabIndex = 8;
       this.searchPatternBox.TabStop = false;
       this.searchPatternBox.Text = "*.*";
-      this.searchPatternBox.Leave += new System.EventHandler(this.searchPatternBox_Leave);
+      this.searchPatternBox.Leave += new System.EventHandler(this.SearchBox_Leave);
       // 
-      // refresh
+      // refreshButton
       // 
-      this.refresh.Enabled = false;
-      this.refresh.Location = new System.Drawing.Point(84, 96);
-      this.refresh.Name = "refresh";
-      this.refresh.Size = new System.Drawing.Size(70, 23);
-      this.refresh.TabIndex = 7;
-      this.refresh.TabStop = false;
-      this.refresh.Text = "Обновить";
-      this.refresh.UseVisualStyleBackColor = true;
-      this.refresh.Click += new System.EventHandler(this.Refresh_Click);
+      this.refreshButton.Enabled = false;
+      this.refreshButton.Location = new System.Drawing.Point(84, 96);
+      this.refreshButton.Name = "refreshButton";
+      this.refreshButton.Size = new System.Drawing.Size(70, 23);
+      this.refreshButton.TabIndex = 7;
+      this.refreshButton.TabStop = false;
+      this.refreshButton.Text = "Обновить";
+      this.refreshButton.UseVisualStyleBackColor = true;
+      this.refreshButton.Click += new System.EventHandler(this.Refresh_Click);
       // 
-      // replace
+      // replaceButton
       // 
-      this.replace.Enabled = false;
-      this.replace.Location = new System.Drawing.Point(3, 125);
-      this.replace.Name = "replace";
-      this.replace.Size = new System.Drawing.Size(151, 23);
-      this.replace.TabIndex = 6;
-      this.replace.TabStop = false;
-      this.replace.Text = "Поиск и замена";
-      this.replace.UseVisualStyleBackColor = true;
-      this.replace.Click += new System.EventHandler(this.replace_Click);
+      this.replaceButton.Enabled = false;
+      this.replaceButton.Location = new System.Drawing.Point(3, 125);
+      this.replaceButton.Name = "replaceButton";
+      this.replaceButton.Size = new System.Drawing.Size(151, 23);
+      this.replaceButton.TabIndex = 6;
+      this.replaceButton.TabStop = false;
+      this.replaceButton.Text = "Поиск и замена";
+      this.replaceButton.UseVisualStyleBackColor = true;
+      this.replaceButton.Click += new System.EventHandler(this.Replace_Click);
       // 
-      // search
+      // searchButton
       // 
-      this.search.Enabled = false;
-      this.search.Location = new System.Drawing.Point(3, 96);
-      this.search.Name = "search";
-      this.search.Size = new System.Drawing.Size(70, 23);
-      this.search.TabIndex = 5;
-      this.search.TabStop = false;
-      this.search.Text = "Поиск";
-      this.search.UseVisualStyleBackColor = true;
-      this.search.Click += new System.EventHandler(this.search_Click);
+      this.searchButton.Enabled = false;
+      this.searchButton.Location = new System.Drawing.Point(3, 96);
+      this.searchButton.Name = "searchButton";
+      this.searchButton.Size = new System.Drawing.Size(70, 23);
+      this.searchButton.TabIndex = 5;
+      this.searchButton.TabStop = false;
+      this.searchButton.Text = "Поиск";
+      this.searchButton.UseVisualStyleBackColor = true;
+      this.searchButton.Click += new System.EventHandler(this.Search_Click);
       // 
       // directoryPath
       // 
@@ -307,7 +307,7 @@
       this.folderLink.TabIndex = 1;
       this.folderLink.TabStop = true;
       this.folderLink.Text = "Каталог";
-      this.folderLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+      this.folderLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.DirectoryLinkClicked);
       // 
       // openDirectoryButton
       // 
@@ -356,7 +356,7 @@
       this.MainMenuStrip = this.menuStrip;
       this.MinimumSize = new System.Drawing.Size(750, 400);
       this.Name = "MainForm";
-      this.Text = "BATCH processing";
+      this.Text = "KURS text2text";
       this.menuStrip.ResumeLayout(false);
       this.menuStrip.PerformLayout();
       this.statusStrip.ResumeLayout(false);
@@ -386,8 +386,8 @@
     private System.Windows.Forms.MenuStrip menuStrip;
     private System.Windows.Forms.ToolStripMenuItem fileTools;
     private System.Windows.Forms.ToolStripMenuItem choseDirectory;
-    private System.Windows.Forms.ToolStripMenuItem quit;
-    private System.Windows.Forms.ToolStripMenuItem reference;
+    private System.Windows.Forms.ToolStripMenuItem quitButton;
+    private System.Windows.Forms.ToolStripMenuItem referenceMenu;
     private System.Windows.Forms.ToolStripMenuItem aboutButton;
     private System.Windows.Forms.StatusStrip statusStrip;
     private System.Windows.Forms.ToolStripStatusLabel statusLabel;
@@ -399,14 +399,14 @@
     private System.Windows.Forms.GroupBox replaseTextBox;
     private System.Windows.Forms.TextBox replaceBox;
     private System.Windows.Forms.Panel controlPanel;
-    private System.Windows.Forms.Button replace;
-    private System.Windows.Forms.Button search;
+    private System.Windows.Forms.Button replaceButton;
+    private System.Windows.Forms.Button searchButton;
     private System.Windows.Forms.TextBox directoryPath;
     private System.Windows.Forms.LinkLabel folderLink;
     private System.Windows.Forms.Button openDirectoryButton;
     private System.Windows.Forms.SplitContainer leftContainer;
     private System.Windows.Forms.ErrorProvider errorProvider;
-    private System.Windows.Forms.Button refresh;
+    private System.Windows.Forms.Button refreshButton;
     private System.Windows.Forms.TextBox searchPatternBox;
     private System.Windows.Forms.Label paternLabel;
   }
